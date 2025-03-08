@@ -18,40 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setLanguage('sv');
     });
     
-    // Add event listener to CV download link
-    const cvDownloadLink = document.getElementById('cv-download-link');
-    if (cvDownloadLink) {
-        cvDownloadLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            const language = document.documentElement.lang || 'en';
-            downloadCV(language);
-        });
-    }
-    
-    // Function to force download CV
-    function downloadCV(language) {
-        // Create an invisible anchor element
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        
-        // Set the file path based on language
-        const filePath = `public/files/CV_${language}.pdf`;
-        
-        // Set download attributes
-        link.href = filePath;
-        link.setAttribute('download', `Joel_Bjornfot_CV_${language}.pdf`);
-        link.setAttribute('target', '_blank');
-        
-        // Append to body, trigger click, and remove
-        document.body.appendChild(link);
-        link.click();
-        
-        // Clean up after a short delay
-        setTimeout(() => {
-            document.body.removeChild(link);
-        }, 100);
-    }
-    
     // Function to apply language
     function setLanguage(language) {
         document.documentElement.lang = language;
@@ -77,5 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
         durations.forEach(function(element) {
             element.textContent = element.getAttribute(`data-${language}`);
         });
+        
+        // Update CV download link based on language
+        const cvDownloadLink = document.getElementById('cv-download-link');
+        if (cvDownloadLink) {
+            cvDownloadLink.href = `public/files/CV_${language}.pdf`;
+        }
     }
 }); 
