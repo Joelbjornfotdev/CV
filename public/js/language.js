@@ -18,6 +18,34 @@ document.addEventListener('DOMContentLoaded', function() {
         setLanguage('sv');
     });
     
+    // Function to check if device is mobile
+    function isMobileDevice() {
+        return (window.innerWidth <= 768) || 
+               (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    }
+    
+    // Set up CV download link based on device
+    const cvDownloadLink = document.getElementById('cv-download-link');
+    if (cvDownloadLink) {
+        if (isMobileDevice()) {
+            // For mobile: remove download attribute to open in new tab
+            cvDownloadLink.removeAttribute('download');
+        } else {
+            // For desktop: ensure download attribute is set
+            const language = document.documentElement.lang || 'en';
+            cvDownloadLink.setAttribute('download', `Joel_Bjornfot_CV_${language}.pdf`);
+        }
+        
+        // Update link when language changes
+        cvDownloadLink.addEventListener('click', function(e) {
+            const language = document.documentElement.lang || 'en';
+            if (!isMobileDevice()) {
+                // Only set download attribute on desktop
+                cvDownloadLink.setAttribute('download', `Joel_Bjornfot_CV_${language}.pdf`);
+            }
+        });
+    }
+    
     // Function to apply language
     function setLanguage(language) {
         document.documentElement.lang = language;
@@ -48,7 +76,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const cvDownloadLink = document.getElementById('cv-download-link');
         if (cvDownloadLink) {
             cvDownloadLink.href = `public/files/CV_${language}.pdf`;
-            cvDownloadLink.setAttribute('download', `Joel_Bjornfot_CV_${language}.pdf`);
+            
+            // Only set download attribute on desktop
+            if (!isMobileDevice()) {
+                cvDownloadLink.setAttribute('download', `Joel_Bjornfot_CV_${language}.pdf`);
+            }
         }
     }
 }); 
