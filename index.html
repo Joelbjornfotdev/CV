@@ -401,7 +401,7 @@
                         </div>
                         <div class="cv-text">
                             <p class="cv-label" data-en="Download my CV:" data-sv="Ladda ner mitt CV:">Download my CV:</p>
-                            <a href="public/files/CV_en.pdf" id="cv-download-link" class="cv-download-btn" download data-en="Download CV" data-sv="Ladda ner CV">
+                            <a href="public/files/CV_en.pdf" id="cv-download-link" class="cv-download-btn" download="Joel_Bjornfot_CV.pdf" data-en="Download CV" data-sv="Ladda ner CV">
                                 Download CV
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -439,5 +439,20 @@ const contactMe = () => {
 
     <script src="public/js/language.js"></script>
     <script src="public/js/main.js"></script>
+    <script>
+        // Ensure CV download works without opening in a new tab
+        document.addEventListener('DOMContentLoaded', function() {
+            const cvDownloadLink = document.getElementById('cv-download-link');
+            if (cvDownloadLink) {
+                cvDownloadLink.addEventListener('click', function(e) {
+                    // This ensures the browser treats it as a download rather than navigation
+                    // The download attribute should handle this, but this is an extra measure
+                    const language = document.documentElement.lang || 'en';
+                    const fileName = `Joel_Bjornfot_CV_${language}.pdf`;
+                    cvDownloadLink.setAttribute('download', fileName);
+                });
+            }
+        });
+    </script>
 </body>
 </html> 

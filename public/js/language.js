@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const cvDownloadLink = document.getElementById('cv-download-link');
         if (cvDownloadLink) {
             cvDownloadLink.href = `public/files/CV_${language}.pdf`;
+            cvDownloadLink.setAttribute('download', `Joel_Bjornfot_CV_${language}.pdf`);
         }
     }
 }); 
